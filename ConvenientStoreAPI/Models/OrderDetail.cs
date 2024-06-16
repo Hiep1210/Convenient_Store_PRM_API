@@ -6,7 +6,6 @@ namespace ConvenientStoreAPI.Models
     public partial class OrderDetail
     {
         public int OrderId { get; set; }
-        public double Price { get; set; }
         public string Quantity { get; set; } = null!;
         public int ProductId { get; set; }
         public int Id { get; set; }

@@ -29,7 +29,7 @@ namespace ConvenientStoreAPI.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("server=DESKTOP-7DM08OD\\SQLEXPRESS;database=ConvenientStore;user=sa;password=123456;TrustServerCertificate=true");
+                optionsBuilder.UseSqlServer("server=DESKTOP-7DM08OD\\SQLEXPRESS;database=ConvenientStore;user=sa;password=123456;TrustServerCertificate=true;");
             }
         }
 
@@ -52,7 +52,7 @@ namespace ConvenientStoreAPI.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Image1).HasColumnName("image");
+                entity.Property(e => e.Url).HasColumnName("url");
             });
 
             modelBuilder.Entity<Order>(entity =>
@@ -86,8 +86,6 @@ namespace ConvenientStoreAPI.Models
 
                 entity.Property(e => e.OrderId).HasColumnName("orderId");
 
-                entity.Property(e => e.Price).HasColumnName("price");
-
                 entity.Property(e => e.ProductId).HasColumnName("productId");
 
                 entity.Property(e => e.Quantity)
@@ -115,9 +113,7 @@ namespace ConvenientStoreAPI.Models
 
                 entity.Property(e => e.CatId).HasColumnName("catId");
 
-                entity.Property(e => e.Image)
-                    .HasMaxLength(50)
-                    .HasColumnName("image");
+                entity.Property(e => e.ImageId).HasColumnName("imageId");
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(50)
@@ -132,6 +128,11 @@ namespace ConvenientStoreAPI.Models
                     .HasForeignKey(d => d.CatId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Product_Category");
+
+                entity.HasOne(d => d.Image)
+                    .WithMany(p => p.Products)
+                    .HasForeignKey(d => d.ImageId)
+                    .HasConstraintName("FK_Product_Image");
 
                 entity.HasOne(d => d.Supplier)
                     .WithMany(p => p.Products)

@@ -6,11 +6,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ConvenientStoreAPI.Models;
+using Microsoft.AspNetCore.OData.Query;
+using ConvenientStoreAPI.Common;
 
 namespace ConvenientStoreAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableQuery]
     public class ProductsController : ControllerBase
     {
         private readonly ConvenientStoreContext _context;
@@ -22,17 +25,19 @@ namespace ConvenientStoreAPI.Controllers
 
         // GET: api/Products
         [HttpGet]
+        [EnableQuery]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
           if (_context.Products == null)
           {
               return NotFound();
           }
-            return await _context.Products.ToListAsync();
+            return await _context.Products.Include(x => x.Cat).Include(x => x.Supplier).ToListAsync();
         }
 
         // GET: api/Products/5
         [HttpGet("{id}")]
+        [EnableQuery(PageSize = (int)SizeEnum.PAGE_SIZE)]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
           if (_context.Products == null)

@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ConvenientStoreAPI.Models;
+using Microsoft.AspNetCore.OData.Query;
+using ConvenientStoreAPI.Common;
 
 namespace ConvenientStoreAPI.Controllers
 {
@@ -22,6 +24,7 @@ namespace ConvenientStoreAPI.Controllers
 
         // GET: api/Users
         [HttpGet]
+        [EnableQuery]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
           if (_context.Users == null)
@@ -33,6 +36,7 @@ namespace ConvenientStoreAPI.Controllers
 
         // GET: api/Users/5
         [HttpGet("{id}")]
+        [EnableQuery(PageSize = (int)SizeEnum.PAGE_SIZE)]
         public async Task<ActionResult<User>> GetUser(int id)
         {
           if (_context.Users == null)

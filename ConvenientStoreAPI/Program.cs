@@ -1,4 +1,7 @@
 using ConvenientStoreAPI.Models;
+using ConvenientStoreAPI.Serializer;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData;
 
 namespace ConvenientStoreAPI
 {
@@ -10,12 +13,25 @@ namespace ConvenientStoreAPI
 
             // Add services to the container.
 
-            builder.Services.AddControllers().AddNewtonsoftJson(options =>
-    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            builder.Services.AddControllers().AddOData(opt => opt
+            .Select()
+            .Expand()
+            .Filter()
+            .OrderBy()
+            .SetMaxTop(100)
+            ).AddNewtonsoftJson(options =>
+            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
+            //.AddNewtonsoftJson(options =>
+            //{
+            //    //options.SerializerSettings.ContractResolver = new IgnoreVirtualContractResolver();
+            //    options.SerializerSettings.Converters.Add(new IgnoreVirtualContractResolver());
+            //})
+            ;
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<ConvenientStoreContext>();
+            //builder.Services.AddScoped<IConfiguration>();
 
             var app = builder.Build();
 

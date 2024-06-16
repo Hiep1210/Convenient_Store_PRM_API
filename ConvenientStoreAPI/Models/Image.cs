@@ -5,7 +5,14 @@ namespace ConvenientStoreAPI.Models
 {
     public partial class Image
     {
+        public Image()
+        {
+            Products = new HashSet<Product>();
+        }
+
         public int Id { get; set; }
-        public byte[] Image1 { get; set; } = null!;
+        public string Url { get; set; } = null!;
+
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

@@ -13,11 +13,12 @@ namespace ConvenientStoreAPI.Models
         public int Id { get; set; }
         public string Name { get; set; } = null!;
         public int SupplierId { get; set; }
-        public string? Image { get; set; }
         public double? Price { get; set; }
         public int CatId { get; set; }
+        public int? ImageId { get; set; }
 
         public virtual Category Cat { get; set; } = null!;
+        public virtual Image? Image { get; set; }
         public virtual Supplier Supplier { get; set; } = null!;
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
