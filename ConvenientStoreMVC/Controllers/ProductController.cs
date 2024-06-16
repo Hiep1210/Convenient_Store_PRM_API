@@ -23,10 +23,16 @@ namespace ConvenientStoreMVC.Controllers
         public ActionResult Index()
         {
             string a = APIEnum.BASE_URL.GetDescription();
-            ViewData["list"] = APIEnum.BASE_URL.GetDescription().AppendPathSegment(APIEnum.PRODUCT.GetDescription())
+            List<Product> p = APIEnum.BASE_URL.GetDescription().AppendPathSegment(APIEnum.PRODUCT.GetDescription())
                .WithSettings(s => s.JsonSerializer = Serializer.newtonsoft)
                .GetJsonAsync<List<Product>>().Result;
-            
+            ConvenientStoreContext context = new ConvenientStoreContext();
+            Image img = context.Images.Find(1);
+            for (int i = 0; i < p.Count; i++)
+            {
+                if (p[i].ImageId == null) p[i].Image = img;
+            }
+            ViewData["list"] = p;
             return View();
         }
 

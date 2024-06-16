@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ConvenientStoreAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+698f858f4738970657574ff8214b82d736bfd1c8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+02da3d51eb4961ac07dd02b1e6a24b6d5ce07c26")]
 [assembly: System.Reflection.AssemblyProductAttribute("ConvenientStoreAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ConvenientStoreAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

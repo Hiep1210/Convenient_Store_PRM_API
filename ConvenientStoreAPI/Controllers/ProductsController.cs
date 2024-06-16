@@ -32,7 +32,7 @@ namespace ConvenientStoreAPI.Controllers
           {
               return NotFound();
           }
-            return await _context.Products.Include(x => x.Cat).Include(x => x.Supplier).ToListAsync();
+            return await _context.Products.Include(x => x.Cat).Include(x => x.Supplier).Include(x => x.Image).ToListAsync();
         }
 
         // GET: api/Products/5
@@ -44,7 +44,7 @@ namespace ConvenientStoreAPI.Controllers
           {
               return NotFound();
           }
-            var product = await _context.Products.Include(x => x.Cat).Include(x => x.Supplier).FirstOrDefaultAsync(x => x.Id == id);
+            var product = await _context.Products.Include(x => x.Cat).Include(x => x.Supplier).Include(x => x.Image).FirstOrDefaultAsync(x => x.Id == id);
 
             if (product == null)
             {

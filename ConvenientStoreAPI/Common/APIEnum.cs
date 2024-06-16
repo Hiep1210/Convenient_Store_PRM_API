@@ -5,7 +5,7 @@ namespace ConvenientStoreAPI.Common
 {
     public enum APIEnum
     {
-        [Description("https://localhost:7024/api")]
+        [Description("http://localhost:5000/api")]
         BASE_URL,
         [Description("Products")]
         PRODUCT,
