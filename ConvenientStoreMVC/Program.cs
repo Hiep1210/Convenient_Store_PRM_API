@@ -1,3 +1,6 @@
+using ConvenientStoreAPI.Common;
+using ConvenientStoreAPI.Models;
+
 namespace ConvenientStoreMVC
 {
     public class Program
@@ -8,7 +11,14 @@ namespace ConvenientStoreMVC
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            var apiProjectPath = Path.Combine(Directory.GetCurrentDirectory(), "..", "ConvenientStoreAPI");
 
+            builder.Configuration
+                .SetBasePath(apiProjectPath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+            builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
+            builder.Services.AddDbContext<ConvenientStoreContext>();
+            builder.Services.AddScoped<PhotoManager>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

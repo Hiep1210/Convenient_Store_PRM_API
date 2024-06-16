@@ -1,4 +1,4 @@
-﻿namespace ConvenientStoreMVC.Models
+﻿namespace ConvenientStoreAPI.Models
 {
     public class CloudinarySettings
     {

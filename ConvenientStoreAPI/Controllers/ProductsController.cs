@@ -44,7 +44,7 @@ namespace ConvenientStoreAPI.Controllers
           {
               return NotFound();
           }
-            var product = await _context.Products.FindAsync(id);
+            var product = await _context.Products.Include(x => x.Cat).Include(x => x.Supplier).FirstOrDefaultAsync(x => x.Id == id);
 
             if (product == null)
             {

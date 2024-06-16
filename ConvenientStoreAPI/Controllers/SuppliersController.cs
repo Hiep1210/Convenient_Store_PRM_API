@@ -31,7 +31,7 @@ namespace ConvenientStoreAPI.Controllers
           {
               return NotFound();
           }
-            return await _context.Suppliers.ToListAsync();
+            return await _context.Suppliers.Include(x => x.Products).ToListAsync();
         }
 
         // GET: api/Suppliers/5
@@ -43,7 +43,7 @@ namespace ConvenientStoreAPI.Controllers
           {
               return NotFound();
           }
-            var supplier = await _context.Suppliers.FindAsync(id);
+            var supplier = await _context.Suppliers.Include(x => x.Products).FirstOrDefaultAsync(x => x.Id == id);
 
             if (supplier == null)
             {

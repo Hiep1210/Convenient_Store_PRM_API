@@ -1,6 +1,6 @@
 ﻿using Flurl.Http.Newtonsoft;
 
-namespace ConvenientStoreAPI.Common
+namespace ConvenientStoreMVC.Common
 {
     public class Serializer
     {

@@ -1,7 +1,6 @@
 ﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using ConvenientStoreAPI.Models;
-using ConvenientStoreMVC.Models;
 
 namespace ConvenientStoreAPI.Common
 {
@@ -15,7 +14,7 @@ namespace ConvenientStoreAPI.Common
         public PhotoManager(IConfiguration configuration, ConvenientStoreContext context)
         {
             this.context = context;
-            this.Configuration = configuration;
+            Configuration = configuration;
             setting = Configuration.GetSection("CloudinarySettings").Get<CloudinarySettings>();
             Account account = new Account(setting.CloudName,
                 setting.ApiKey,

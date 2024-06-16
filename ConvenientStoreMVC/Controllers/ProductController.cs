@@ -1,20 +1,29 @@
-﻿using ConvenientStoreAPI.Common;
+﻿using ConvenientStoreMVC.Common;
+using ConvenientStoreAPI.Common;
 using ConvenientStoreAPI.Models;
 using Flurl;
 using Flurl.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.OpenApi.Extensions;
+using System.Net;
 
 namespace ConvenientStoreMVC.Controllers
 {
     public class ProductController : Controller
     {
+        private PhotoManager manager;
+
+        public ProductController(PhotoManager manager)
+        {
+            this.manager = manager;
+        }
         // GET: ProductController
         public ActionResult Index()
         {
             string a = APIEnum.BASE_URL.GetDescription();
-            ViewData["list"] = APIEnum.BASE_URL.GetDescription().AppendPathSegment("Products")
+            ViewData["list"] = APIEnum.BASE_URL.GetDescription().AppendPathSegment(APIEnum.PRODUCT.GetDescription())
                .WithSettings(s => s.JsonSerializer = Serializer.newtonsoft)
                .GetJsonAsync<List<Product>>().Result;
             
@@ -30,16 +39,41 @@ namespace ConvenientStoreMVC.Controllers
         // GET: ProductController/Create
         public ActionResult Create()
         {
+            ViewBag.sup = APIEnum.BASE_URL.GetDescription().AppendPathSegment(APIEnum.SUPPLIER.GetDescription())
+                .WithSettings(s => s.JsonSerializer = Serializer.newtonsoft)
+               .GetJsonAsync<List<Supplier>>().Result.Select(c => new SelectListItem
+               {
+                   Value = c.Id.ToString(),
+                   Text = c.Name,
+               });
+            ViewBag.cat = APIEnum.BASE_URL.GetDescription().AppendPathSegment(APIEnum.CATEGORY.GetDescription())
+                .WithSettings(s => s.JsonSerializer = Serializer.newtonsoft)
+               .GetJsonAsync<List<Category>>().Result.Select(c => new SelectListItem
+               {
+                   Value = c.Id.ToString(),
+                   Text = c.Name,
+               });
             return View();
         }
 
         // POST: ProductController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Product product, IFormFile image)
         {
             try
             {
+                //IFormFile img = f["image"];
+                Image result = manager.UploadImage(image);
+                product.ImageId = result.Id;
+
+                IFlurlResponse resp =  APIEnum.BASE_URL.GetDescription().AppendPathSegment(APIEnum.PRODUCT.GetDescription())
+                .WithSettings(s => s.JsonSerializer = Serializer.newtonsoft).PostJsonAsync(product).Result;
+
+                if(resp.StatusCode == ((int)HttpStatusCode.Created))
+                {
+                    TempData["mess"] = "Created Product Successfully";
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             catch

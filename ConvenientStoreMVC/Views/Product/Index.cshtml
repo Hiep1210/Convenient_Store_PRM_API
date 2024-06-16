@@ -59,3 +59,11 @@
 }
     </tbody>
 </table>
+@if (TempData["mess"] != null)
+{
+    <script>
+        window.onload=function(){
+            alert("@TempData["mess"]");
+        }
+    </script>
+    }
