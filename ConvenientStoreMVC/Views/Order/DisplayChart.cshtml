@@ -1,0 +1,31 @@
+﻿@model ConvenientStoreMVC.ChartImpl.ChartJsViewModel
+
+<div class="chart-container row" width="600" height="400">
+    <div class="col-4">
+        <canvas id="barChart"></canvas>
+        <canvas id="lineChart"></canvas>
+    </div>
+    <div class="col-4">
+        <canvas id="radarChart"></canvas>
+    </div>
+    <div class="col-4">
+        <canvas id="pieChart"></canvas>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+
+        var bar = document.getElementById('barChart');
+        var pie = document.getElementById('pieChart');
+        var radar = document.getElementById('radarChart');
+        var line = document.getElementById('lineChart');
+        var barChart = new Chart(bar, @Html.Raw(Model.ChartJson) );
+        var pieChart = new Chart(pie, { ...@Html.Raw(Model.ChartJson), type: 'pie' });
+        var radarChart = new Chart(radar, { ...@Html.Raw(Model.ChartJson), type: 'radar' });
+        var radarChart = new Chart(line, { ...@Html.Raw(Model.ChartJson), type: 'line' });
+
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<script type="text/javascript" src="jscript/graph.js"></script>

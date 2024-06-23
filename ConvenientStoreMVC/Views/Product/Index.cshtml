@@ -34,36 +34,39 @@
     <tbody>
         @foreach (Product item in ViewData["list"] as List<Product>)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cat.Name)
-            </td>
-            <td>
-                <img src="@item.Image.Url" />
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Supplier.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cat.Name)
+                </td>
+                <td>
+                    <img src="@item.Image.Url" style="width: 400px; height:200px; object-fit:cover" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Supplier.Name)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+@for (int i = 1; i < (int)ViewData["pages"]; i++){
+    <a class="btn btn-primary" asp-action="Index" asp-route-pages="@i">@i</a>
+}
 @if (TempData["mess"] != null)
 {
     <script>
-        window.onload=function(){
+        window.onload = function () {
             alert("@TempData["mess"]");
         }
     </script>
-    }
+}

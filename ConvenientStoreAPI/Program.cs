@@ -1,8 +1,10 @@
 using ConvenientStoreAPI.Common;
+using ConvenientStoreAPI.Mapper;
 using ConvenientStoreAPI.Models;
 using ConvenientStoreAPI.Serializer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData;
+using Microsoft.EntityFrameworkCore;
 
 namespace ConvenientStoreAPI
 {
@@ -31,12 +33,21 @@ namespace ConvenientStoreAPI
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
             builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddCors();
             builder.Services.AddSwaggerGen();
             builder.Services.AddSingleton<IConfiguration>(configuration);
             builder.Services.AddDbContext<ConvenientStoreContext>();
+            builder.Services.AddAutoMapper(typeof(MyMapper).Assembly);
             builder.Services.AddScoped<PhotoManager>();
 
             var app = builder.Build();
+            app.UseCors(builder =>
+            {
+                builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            });
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

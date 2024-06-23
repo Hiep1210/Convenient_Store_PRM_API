@@ -19,7 +19,7 @@ namespace ConvenientStoreAPI.Models
         public virtual DbSet<Category> Categories { get; set; } = null!;
         public virtual DbSet<Image> Images { get; set; } = null!;
         public virtual DbSet<Order> Orders { get; set; } = null!;
-        public virtual DbSet<OrderDetail> OrderDetails { get; set; } = null!;
+        public virtual DbSet<Orderdetail> Orderdetails { get; set; } = null!;
         public virtual DbSet<Product> Products { get; set; } = null!;
         public virtual DbSet<Supplier> Suppliers { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
@@ -28,26 +28,32 @@ namespace ConvenientStoreAPI.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("server=DESKTOP-7DM08OD\\SQLEXPRESS;database=ConvenientStore;user=sa;password=123456;TrustServerCertificate=true;");
+                var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+                optionsBuilder.UseMySql(config.GetConnectionString("Connect"), ServerVersion.AutoDetect(config.GetConnectionString("Connect")));
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.UseCollation("utf8mb4_0900_ai_ci")
+                .HasCharSet("utf8mb4");
+
             modelBuilder.Entity<Category>(entity =>
             {
-                entity.ToTable("Category");
+                entity.ToTable("category");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(50)
-                    .HasColumnName("name");
+                    .HasColumnName("name")
+                    .UseCollation("utf8mb3_general_ci")
+                    .HasCharSet("utf8mb3");
             });
 
             modelBuilder.Entity<Image>(entity =>
             {
-                entity.ToTable("Image");
+                entity.ToTable("image");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
@@ -56,17 +62,19 @@ namespace ConvenientStoreAPI.Models
 
             modelBuilder.Entity<Order>(entity =>
             {
-                entity.ToTable("Order");
+                entity.ToTable("order");
+
+                entity.HasIndex(e => e.UserId, "FK_Order_User");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Address)
                     .HasMaxLength(50)
-                    .HasColumnName("address");
+                    .HasColumnName("address")
+                    .UseCollation("utf8mb3_general_ci")
+                    .HasCharSet("utf8mb3");
 
-                entity.Property(e => e.Date)
-                    .HasColumnType("date")
-                    .HasColumnName("date");
+                entity.Property(e => e.Date).HasColumnName("date");
 
                 entity.Property(e => e.UserId).HasColumnName("userId");
 
@@ -77,11 +85,20 @@ namespace ConvenientStoreAPI.Models
                     .HasConstraintName("FK_Order_User");
             });
 
-            modelBuilder.Entity<OrderDetail>(entity =>
+            modelBuilder.Entity<Orderdetail>(entity =>
             {
-                entity.ToTable("OrderDetail");
+                entity.ToTable("orderdetail");
+
+                entity.HasIndex(e => e.OrderId, "FK_OrderDetail_Order");
+
+                entity.HasIndex(e => e.ProductId, "FK_OrderDetail_Product");
 
                 entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.IsProcess)
+                    .HasColumnType("tinyint(1) unsigned zerofill")
+                    .HasColumnName("isProcess")
+                    .HasDefaultValueSql("'0'");
 
                 entity.Property(e => e.OrderId).HasColumnName("orderId");
 
@@ -89,16 +106,18 @@ namespace ConvenientStoreAPI.Models
 
                 entity.Property(e => e.Quantity)
                     .HasMaxLength(50)
-                    .HasColumnName("quantity");
+                    .HasColumnName("quantity")
+                    .UseCollation("utf8mb3_general_ci")
+                    .HasCharSet("utf8mb3");
 
                 entity.HasOne(d => d.Order)
-                    .WithMany(p => p.OrderDetails)
+                    .WithMany(p => p.Orderdetails)
                     .HasForeignKey(d => d.OrderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OrderDetail_Order");
 
                 entity.HasOne(d => d.Product)
-                    .WithMany(p => p.OrderDetails)
+                    .WithMany(p => p.Orderdetails)
                     .HasForeignKey(d => d.ProductId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OrderDetail_Product");
@@ -106,7 +125,13 @@ namespace ConvenientStoreAPI.Models
 
             modelBuilder.Entity<Product>(entity =>
             {
-                entity.ToTable("Product");
+                entity.ToTable("product");
+
+                entity.HasIndex(e => e.CatId, "FK_Product_Category");
+
+                entity.HasIndex(e => e.ImageId, "FK_Product_Image");
+
+                entity.HasIndex(e => e.SupplierId, "FK_Product_Supplier");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
@@ -116,7 +141,9 @@ namespace ConvenientStoreAPI.Models
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(50)
-                    .HasColumnName("name");
+                    .HasColumnName("name")
+                    .UseCollation("utf8mb3_general_ci")
+                    .HasCharSet("utf8mb3");
 
                 entity.Property(e => e.Price).HasColumnName("price");
 
@@ -142,36 +169,46 @@ namespace ConvenientStoreAPI.Models
 
             modelBuilder.Entity<Supplier>(entity =>
             {
-                entity.ToTable("Supplier");
+                entity.ToTable("supplier");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Contact)
                     .HasMaxLength(50)
-                    .HasColumnName("contact");
+                    .HasColumnName("contact")
+                    .UseCollation("utf8mb3_general_ci")
+                    .HasCharSet("utf8mb3");
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(50)
-                    .HasColumnName("name");
+                    .HasColumnName("name")
+                    .UseCollation("utf8mb3_general_ci")
+                    .HasCharSet("utf8mb3");
             });
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.ToTable("User");
+                entity.ToTable("user");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Address)
                     .HasMaxLength(50)
-                    .HasColumnName("address");
+                    .HasColumnName("address")
+                    .UseCollation("utf8mb3_general_ci")
+                    .HasCharSet("utf8mb3");
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(50)
-                    .HasColumnName("name");
+                    .HasColumnName("name")
+                    .UseCollation("utf8mb3_general_ci")
+                    .HasCharSet("utf8mb3");
 
                 entity.Property(e => e.Phone)
                     .HasMaxLength(50)
-                    .HasColumnName("phone");
+                    .HasColumnName("phone")
+                    .UseCollation("utf8mb3_general_ci")
+                    .HasCharSet("utf8mb3");
             });
 
             OnModelCreatingPartial(modelBuilder);

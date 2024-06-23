@@ -287,3 +287,6 @@ D:\Ki_8\PRM\ConvenientStoreAPI\ConvenientStoreAPI\obj\Debug\net6.0\ConvenientSto
 D:\Ki_8\PRM\ConvenientStoreAPI\ConvenientStoreAPI\bin\Debug\net6.0\CloudinaryDotNet.dll
 D:\Ki_8\PRM\ConvenientStoreAPI\ConvenientStoreAPI\obj\Debug\net6.0\ConvenientStoreAPI.RazorAssemblyInfo.cache
 D:\Ki_8\PRM\ConvenientStoreAPI\ConvenientStoreAPI\obj\Debug\net6.0\ConvenientStoreAPI.RazorAssemblyInfo.cs
+D:\Ki_8\PRM\ConvenientStoreAPI\ConvenientStoreAPI\bin\Debug\net6.0\MySqlConnector.dll
+D:\Ki_8\PRM\ConvenientStoreAPI\ConvenientStoreAPI\bin\Debug\net6.0\Pomelo.EntityFrameworkCore.MySql.dll
+D:\Ki_8\PRM\ConvenientStoreAPI\ConvenientStoreAPI\bin\Debug\net6.0\AutoMapper.dll

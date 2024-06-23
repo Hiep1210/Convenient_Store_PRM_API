@@ -8,19 +8,22 @@ using Microsoft.EntityFrameworkCore;
 using ConvenientStoreAPI.Models;
 using Microsoft.AspNetCore.OData.Query;
 using ConvenientStoreAPI.Common;
+using ConvenientStoreAPI.Mapper.DTO;
+using AutoMapper;
 
 namespace ConvenientStoreAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableQuery]
     public class ProductsController : ControllerBase
     {
         private readonly ConvenientStoreContext _context;
+        private readonly IMapper mapper;
 
-        public ProductsController(ConvenientStoreContext context)
+        public ProductsController(ConvenientStoreContext context, IMapper mapper)
         {
             _context = context;
+            this.mapper = mapper;
         }
 
         // GET: api/Products
@@ -57,13 +60,13 @@ namespace ConvenientStoreAPI.Controllers
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        public async Task<IActionResult> PutProduct(int id, ProductRequest request)
         {
-            if (id != product.Id)
+            if (id != request.Id)
             {
                 return BadRequest();
             }
-
+            Product product = mapper.Map<Product>(request);
             _context.Entry(product).State = EntityState.Modified;
 
             try
@@ -88,12 +91,13 @@ namespace ConvenientStoreAPI.Controllers
         // POST: api/Products
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        public async Task<ActionResult<Product>> PostProduct(ProductRequest request)
         {
           if (_context.Products == null)
           {
               return Problem("Entity set 'ConvenientStoreContext.Products'  is null.");
           }
+            Product product = mapper.Map<Product>(request);
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
 

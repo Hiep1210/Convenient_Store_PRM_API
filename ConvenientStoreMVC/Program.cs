@@ -1,4 +1,5 @@
 using ConvenientStoreAPI.Common;
+using ConvenientStoreAPI.Mapper;
 using ConvenientStoreAPI.Models;
 
 namespace ConvenientStoreMVC
@@ -18,6 +19,7 @@ namespace ConvenientStoreMVC
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
             builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
             builder.Services.AddDbContext<ConvenientStoreContext>();
+            builder.Services.AddAutoMapper(typeof(MyMapper).Assembly);
             builder.Services.AddScoped<PhotoManager>();
             var app = builder.Build();
 

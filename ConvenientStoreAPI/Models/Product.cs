@@ -7,7 +7,7 @@ namespace ConvenientStoreAPI.Models
     {
         public Product()
         {
-            OrderDetails = new HashSet<OrderDetail>();
+            Orderdetails = new HashSet<Orderdetail>();
         }
 
         public int Id { get; set; }
@@ -20,6 +20,6 @@ namespace ConvenientStoreAPI.Models
         public virtual Category Cat { get; set; } = null!;
         public virtual Image? Image { get; set; }
         public virtual Supplier Supplier { get; set; } = null!;
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<Orderdetail> Orderdetails { get; set; }
     }
 }
