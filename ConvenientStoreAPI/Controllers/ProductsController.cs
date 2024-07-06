@@ -40,7 +40,7 @@ namespace ConvenientStoreAPI.Controllers
 
         // GET: api/Products/5
         [HttpGet("{id}")]
-        [EnableQuery(PageSize = (int)SizeEnum.PAGE_SIZE)]
+        [EnableQuery]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
           if (_context.Products == null)

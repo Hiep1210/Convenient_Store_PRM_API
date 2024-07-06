@@ -24,7 +24,7 @@ namespace ConvenientStoreAPI.Controllers
 
         // GET: api/Categories
         [HttpGet]
-        [EnableQuery(PageSize = (int) SizeEnum.PAGE_SIZE)]
+        [EnableQuery]
         public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
         {
           if (_context.Categories == null)

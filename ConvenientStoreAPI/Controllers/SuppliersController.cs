@@ -24,14 +24,26 @@ namespace ConvenientStoreAPI.Controllers
 
         // GET: api/Suppliers
         [HttpGet]
-        [EnableQuery(PageSize = (int)SizeEnum.PAGE_SIZE)]
-        public async Task<ActionResult<IEnumerable<Supplier>>> GetSuppliers()
+        [EnableQuery]
+        public async Task<ActionResult<List<Supplier>>> GetSuppliers()
         {
           if (_context.Suppliers == null)
           {
               return NotFound();
           }
             return await _context.Suppliers.Include(x => x.Products).ToListAsync();
+        }
+
+        [HttpGet("InSale")]
+        public async Task<ActionResult<List<Supplier>>> GetSuppliersInSale()
+        {
+            if (_context.Suppliers == null)
+            {
+                return NotFound();
+            }
+            return await _context.Suppliers.Include(x => x.Products).ThenInclude(x => x.Orderdetails)
+                            .Where(supplier => supplier.Products
+                                .Any(product => product.Orderdetails.Any())).ToListAsync();
         }
 
         // GET: api/Suppliers/5

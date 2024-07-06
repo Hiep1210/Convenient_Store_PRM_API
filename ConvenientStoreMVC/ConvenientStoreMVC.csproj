@@ -7,6 +7,92 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\images\.gitignore" />
+    <Content Remove="wwwroot\images\admin.jpg" />
+    <Content Remove="wwwroot\images\avatar\1.jpg" />
+    <Content Remove="wwwroot\images\avatar\2.jpg" />
+    <Content Remove="wwwroot\images\avatar\3.jpg" />
+    <Content Remove="wwwroot\images\avatar\4.jpg" />
+    <Content Remove="wwwroot\images\avatar\5.jpg" />
+    <Content Remove="wwwroot\images\avatar\6.jpg" />
+    <Content Remove="wwwroot\images\avatar\64-1.jpg" />
+    <Content Remove="wwwroot\images\avatar\64-2.jpg" />
+    <Content Remove="wwwroot\images\favicon.png" />
+    <Content Remove="wwwroot\images\logo.png" />
+    <Content Remove="wwwroot\images\logo.psd" />
+    <Content Remove="wwwroot\images\logo2.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="001 elaadmin-master\.github\ISSUE_TEMPLATE.md" />
+    <None Include="wwwroot\assets\css\cs-skin-elastic.css" />
+    <None Include="wwwroot\assets\css\lib\chosen\chosen-sprite%402x.png" />
+    <None Include="wwwroot\assets\css\lib\chosen\chosen-sprite.png" />
+    <None Include="wwwroot\assets\css\lib\chosen\chosen.css" />
+    <None Include="wwwroot\assets\css\lib\chosen\chosen.min.css" />
+    <None Include="wwwroot\assets\css\lib\datatable\buttons.bootstrap.min.css" />
+    <None Include="wwwroot\assets\css\lib\datatable\buttons.dataTables.min.css" />
+    <None Include="wwwroot\assets\css\lib\datatable\dataTables.bootstrap.min.css" />
+    <None Include="wwwroot\assets\css\lib\vector-map\jqvmap.min.css" />
+    <None Include="wwwroot\assets\css\style.css" />
+    <None Include="wwwroot\assets\css\style.css.map" />
+    <None Include="wwwroot\assets\fonts\icomoon\icomoon.eot" />
+    <None Include="wwwroot\assets\fonts\icomoon\icomoon.svg" />
+    <None Include="wwwroot\assets\fonts\icomoon\icomoon.ttf" />
+    <None Include="wwwroot\assets\fonts\icomoon\icomoon.woff" />
+    <None Include="wwwroot\assets\fonts\icomoon\index.html" />
+    <None Include="wwwroot\assets\js\dashboard.js" />
+    <None Include="wwwroot\assets\js\init\chartjs-init.js" />
+    <None Include="wwwroot\assets\js\init\datatables-init.js" />
+    <None Include="wwwroot\assets\js\init\flot-chart-init.js" />
+    <None Include="wwwroot\assets\js\init\fullcalendar-init.js" />
+    <None Include="wwwroot\assets\js\init\gmap-init.js" />
+    <None Include="wwwroot\assets\js\init\peitychart-init.js" />
+    <None Include="wwwroot\assets\js\init\vector-init.js" />
+    <None Include="wwwroot\assets\js\init\weather-init.js" />
+    <None Include="wwwroot\assets\js\lib\chosen\chosen.jquery.js" />
+    <None Include="wwwroot\assets\js\lib\chosen\chosen.jquery.min.js" />
+    <None Include="wwwroot\assets\js\lib\chosen\chosen.proto.js" />
+    <None Include="wwwroot\assets\js\lib\chosen\chosen.proto.min.js" />
+    <None Include="wwwroot\assets\js\lib\data-table\buttons.bootstrap.min.js" />
+    <None Include="wwwroot\assets\js\lib\data-table\buttons.colVis.min.js" />
+    <None Include="wwwroot\assets\js\lib\data-table\buttons.flash.min.js" />
+    <None Include="wwwroot\assets\js\lib\data-table\buttons.html5.min.js" />
+    <None Include="wwwroot\assets\js\lib\data-table\buttons.print.min.js" />
+    <None Include="wwwroot\assets\js\lib\data-table\dataTables.bootstrap.min.js" />
+    <None Include="wwwroot\assets\js\lib\data-table\dataTables.buttons.min.js" />
+    <None Include="wwwroot\assets\js\lib\data-table\datatables.min.js" />
+    <None Include="wwwroot\assets\js\lib\data-table\jquery-1.12.4.js" />
+    <None Include="wwwroot\assets\js\lib\data-table\jquery.dataTables.min.js" />
+    <None Include="wwwroot\assets\js\lib\data-table\jszip.min.js" />
+    <None Include="wwwroot\assets\js\lib\data-table\pdfmake.min.js" />
+    <None Include="wwwroot\assets\js\lib\data-table\vfs_fonts.js" />
+    <None Include="wwwroot\assets\js\lib\gmap\gmapApi.js" />
+    <None Include="wwwroot\assets\js\lib\gmap\gmaps.js" />
+    <None Include="wwwroot\assets\js\lib\gmap\gmaps.min.js" />
+    <None Include="wwwroot\assets\js\main.js" />
+    <None Include="wwwroot\assets\js\vmap.sampledata.js" />
+    <None Include="wwwroot\assets\js\widgets.js" />
+    <None Include="wwwroot\assets\scss\style.css" />
+    <None Include="wwwroot\assets\scss\style.css.map" />
+    <None Include="wwwroot\assets\scss\style.scss" />
+    <None Include="wwwroot\images\.gitignore" />
+    <None Include="wwwroot\images\admin.jpg" />
+    <None Include="wwwroot\images\avatar\1.jpg" />
+    <None Include="wwwroot\images\avatar\2.jpg" />
+    <None Include="wwwroot\images\avatar\3.jpg" />
+    <None Include="wwwroot\images\avatar\4.jpg" />
+    <None Include="wwwroot\images\avatar\5.jpg" />
+    <None Include="wwwroot\images\avatar\6.jpg" />
+    <None Include="wwwroot\images\avatar\64-1.jpg" />
+    <None Include="wwwroot\images\avatar\64-2.jpg" />
+    <None Include="wwwroot\images\favicon.png" />
+    <None Include="wwwroot\images\logo.png" />
+    <None Include="wwwroot\images\logo.psd" />
+    <None Include="wwwroot\images\logo2.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Chart.Mvc" Version="1.0.0.2" />
     <PackageReference Include="Flurl.Http" Version="4.0.2" />
     <PackageReference Include="Flurl.Http.Newtonsoft" Version="0.9.1" />

@@ -1,6 +1,7 @@
 using ConvenientStoreAPI.Common;
 using ConvenientStoreAPI.Mapper;
 using ConvenientStoreAPI.Models;
+using ConvenientStoreMVC.CallService;
 
 namespace ConvenientStoreMVC
 {
@@ -21,6 +22,9 @@ namespace ConvenientStoreMVC
             builder.Services.AddDbContext<ConvenientStoreContext>();
             builder.Services.AddAutoMapper(typeof(MyMapper).Assembly);
             builder.Services.AddScoped<PhotoManager>();
+            builder.Services.AddScoped<OrderService>();
+            builder.Services.AddScoped<SupplierService>();
+            builder.Services.AddScoped<UserService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -40,7 +44,7 @@ namespace ConvenientStoreMVC
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Product}/{action=Index}/{id?}");
+                pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
         }

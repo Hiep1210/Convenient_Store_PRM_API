@@ -74,7 +74,9 @@ namespace ConvenientStoreAPI.Models
                     .UseCollation("utf8mb3_general_ci")
                     .HasCharSet("utf8mb3");
 
-                entity.Property(e => e.Date).HasColumnName("date");
+                entity.Property(e => e.Date)
+                    .HasColumnType("datetime")
+                    .HasColumnName("date");
 
                 entity.Property(e => e.UserId).HasColumnName("userId");
 
@@ -104,11 +106,7 @@ namespace ConvenientStoreAPI.Models
 
                 entity.Property(e => e.ProductId).HasColumnName("productId");
 
-                entity.Property(e => e.Quantity)
-                    .HasMaxLength(50)
-                    .HasColumnName("quantity")
-                    .UseCollation("utf8mb3_general_ci")
-                    .HasCharSet("utf8mb3");
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
 
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.Orderdetails)
@@ -203,6 +201,10 @@ namespace ConvenientStoreAPI.Models
                     .HasColumnName("name")
                     .UseCollation("utf8mb3_general_ci")
                     .HasCharSet("utf8mb3");
+
+                entity.Property(e => e.Password)
+                    .HasMaxLength(45)
+                    .HasColumnName("password");
 
                 entity.Property(e => e.Phone)
                     .HasMaxLength(50)

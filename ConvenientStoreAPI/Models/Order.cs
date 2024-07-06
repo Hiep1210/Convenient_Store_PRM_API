@@ -11,7 +11,7 @@ namespace ConvenientStoreAPI.Models
         }
 
         public int Id { get; set; }
-        public DateOnly Date { get; set; }
+        public DateTime Date { get; set; }
         public int UserId { get; set; }
         public string Address { get; set; } = null!;
 

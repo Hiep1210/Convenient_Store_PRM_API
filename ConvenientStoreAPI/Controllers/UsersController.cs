@@ -25,7 +25,7 @@ namespace ConvenientStoreAPI.Controllers
         // GET: api/Users
         [HttpGet]
         [EnableQuery]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<List<User>>> GetUsers()
         {
           if (_context.Users == null)
           {
@@ -34,9 +34,20 @@ namespace ConvenientStoreAPI.Controllers
             return await _context.Users.ToListAsync();
         }
 
+        [HttpGet("InSale")]
+        public async Task<ActionResult<List<User>>> GetUsersInSale()
+        {
+            if (_context.Users == null)
+            {
+                return NotFound();
+            }
+            return await _context.Users.Include(x => x.Orders).ThenInclude(x => x.Orderdetails)
+                                .Where(u => u.Orders.Count() > 0).ToListAsync();
+        }
+
         // GET: api/Users/5
         [HttpGet("{id}")]
-        [EnableQuery(PageSize = (int)SizeEnum.PAGE_SIZE)]
+        [EnableQuery]
         public async Task<ActionResult<User>> GetUser(int id)
         {
           if (_context.Users == null)
