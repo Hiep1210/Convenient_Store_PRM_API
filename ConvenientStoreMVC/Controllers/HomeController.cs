@@ -24,11 +24,12 @@ namespace ConvenientStoreMVC.Controllers
         public async Task<ActionResult> Index()
         {
             List<Order> orders = await orderService.getAll();
-            ViewData["list"] = orders;
+            ViewData["orders"] = orders;
             ViewData["chart"] = await DisplayChart();
             ViewData["revenue"] = orders.SelectMany(x => x.Orderdetails).Sum(o => (o.Product.Price * o.Quantity));
             ViewData["sales"] = orders.SelectMany(x => x.Orderdetails).Sum(o => o.Quantity);
             ViewData["client"] = userService.getAllInSale().Result.Count;
+            ViewData["pending"] = orders.Where(x => !x.IsProcess).Count();
 
             return View();
         }

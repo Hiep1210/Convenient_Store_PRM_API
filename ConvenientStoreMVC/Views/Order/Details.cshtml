@@ -1,0 +1,120 @@
+﻿@model ConvenientStoreAPI.Models.Order
+@using ConvenientStoreAPI.Models
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Order</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Order Date
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsProcess)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsProcess)
+        </dd>
+        <dt class = "col-sm-2">
+            Customer
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.User.Name)
+        </dd>
+    </dl>
+    <div class="orders">
+        <div class="row">
+            <div class="col-xl-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="box-title">Orders </h4>
+                    </div>
+                    <div class="card-body--">
+                        <div class="table-stats order-table ov-h">
+                            <table class="table ">
+                                <thead>
+                                    <tr>
+                                        <th class="serial">#</th>
+                                        <th>ID</th>
+                                        <th>Price</th>
+                                        <th>Product Name</th>
+                                        <th class="avatar">Product Image</th>
+                                        <th>Quantity</th>
+                                        <th>Category</th>
+                                        <th>Supplier</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        int i = 0;
+                                    }
+                                    @foreach (Orderdetail details in Model.Orderdetails)
+                                    {
+                                        {
+                                            i++;
+                                        }
+                                        <tr>
+                                            <td class="serial">@i.</td>
+                                            <td> @details.Id </td>
+                                            <td>  <span class="name">@details.Product.Price</span> </td>
+                                            <td> <span class="product">@details.Product.Name</span> </td>
+                                            <td class="avatar">
+                                                <div class="round-img">
+                                                    @if (details.Product.ImageId == null)
+                                                    {
+                                                        <a href="#"><img class="rounded-circle" src="https://res.cloudinary.com/dnvpqwf4y/image/upload/v1718534465/depositphotos_199193024-stock-photo-new-product-concept-illustration-isolated_jy57s1.webp"></a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="#"><img class="rounded-circle" src="@details.Product.Image.Url"></a>
+                                                    }
+                                                </div>
+                                            </td>
+                                            <td><span class="name">@details.Quantity</span></td>
+                                            <td>
+                                                @details.Product.Cat.Name
+                                            </td>
+                                            <td>@details.Product.Supplier.Name</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div> <!-- /.table-stats -->
+                    </div>
+                </div> <!-- /.card -->
+            </div>  <!-- /.col-lg-8 -->
+
+            <div class="col-xl-8">
+                <div class="card br-0">
+                    <div class="card-body">
+                        <div class="chart-container ov-h">
+                            <div id="flotPie1" class="float-chart"></div>
+                        </div>
+                    </div>
+                </div><!-- /.card -->
+            </div>
+
+
+        </div>
+    </div> <!-- /.col-md-4 -->
+</div>
+<div>
+    <a asp-controller="Home" asp-action="Index">Back to List</a>
+</div>
+<div>
+    <a class="btn btn-primary" asp-action="Process" asp-route-id="@Model.Id">Process This Order</a>
+</div>

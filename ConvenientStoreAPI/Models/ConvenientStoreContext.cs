@@ -78,6 +78,10 @@ namespace ConvenientStoreAPI.Models
                     .HasColumnType("datetime")
                     .HasColumnName("date");
 
+                entity.Property(e => e.IsProcess)
+                    .HasColumnType("tinyint(1) unsigned zerofill")
+                    .HasColumnName("isProcess");
+
                 entity.Property(e => e.UserId).HasColumnName("userId");
 
                 entity.HasOne(d => d.User)
@@ -96,11 +100,6 @@ namespace ConvenientStoreAPI.Models
                 entity.HasIndex(e => e.ProductId, "FK_OrderDetail_Product");
 
                 entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.IsProcess)
-                    .HasColumnType("tinyint(1) unsigned zerofill")
-                    .HasColumnName("isProcess")
-                    .HasDefaultValueSql("'0'");
 
                 entity.Property(e => e.OrderId).HasColumnName("orderId");
 

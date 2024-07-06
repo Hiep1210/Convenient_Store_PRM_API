@@ -11,6 +11,7 @@ using System.Net;
 using Newtonsoft.Json;
 using ConvenientStoreAPI.Mapper.DTO;
 using AutoMapper;
+using static System.Net.WebRequestMethods;
 
 namespace ConvenientStoreMVC.Controllers
 {
@@ -25,27 +26,23 @@ namespace ConvenientStoreMVC.Controllers
             this.mapper = mapper;
         }
         // GET: ProductController
-        public ActionResult Index(int pages = 1)
+        public ActionResult Index()
         {
-            string a = APIEnum.BASE_URL.GetDescription();
             List<Product> p = APIEnum.BASE_URL.GetDescription().AppendPathSegment(APIEnum.PRODUCT.GetDescription())
                .WithSettings(s => s.JsonSerializer = Serializer.newtonsoft)
                .GetJsonAsync<List<Product>>().Result;
             ViewData["pages"] = Convert.ToInt32(Math.Ceiling((double)p.Count / (int)SizeEnum.PAGE_SIZE));
-            ConvenientStoreContext context = new ConvenientStoreContext();
-            Image img = context.Images.Find(1);
-            for (int i = 0; i < p.Count; i++)
-            {
-                if (p[i].ImageId == null) p[i].Image = img;
-            }
-            ViewData["list"] = p.Skip((pages - 1) * (int)SizeEnum.PAGE_SIZE).Take((int)SizeEnum.PAGE_SIZE).ToList();
+            ViewData["list"] = p.ToList();
             return View();
         }
 
         // GET: ProductController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            List<Product> p = APIEnum.BASE_URL.GetDescription().AppendPathSegment(APIEnum.PRODUCT.GetDescription())
+               .WithSettings(s => s.JsonSerializer = Serializer.newtonsoft)
+               .GetJsonAsync<List<Product>>().Result;
+            return View(p.First());
         }
 
         // GET: ProductController/Create
@@ -112,7 +109,13 @@ namespace ConvenientStoreMVC.Controllers
                    Text = c.Name,
                });
             Product p = getProduct(id);
-            ViewData["img"] = p.Image;
+            if (p.ImageId == null)
+            {
+                ViewData["img"] = "https://res.cloudinary.com/dnvpqwf4y/image/upload/v1718534465/depositphotos_199193024-stock-photo-new-product-concept-illustration-isolated_jy57s1.webp";
+            }
+            else {
+                ViewData["img"] = p.Image.Url;
+            }
             ProductRequest request = mapper.Map<ProductRequest>(p);
             return View(request);
         }

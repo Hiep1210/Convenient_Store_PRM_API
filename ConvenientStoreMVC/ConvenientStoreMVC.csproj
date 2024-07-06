@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="001 elaadmin-master\.github\ISSUE_TEMPLATE.md" />
     <None Include="wwwroot\assets\css\cs-skin-elastic.css" />
     <None Include="wwwroot\assets\css\lib\chosen\chosen-sprite%402x.png" />
     <None Include="wwwroot\assets\css\lib\chosen\chosen-sprite.png" />

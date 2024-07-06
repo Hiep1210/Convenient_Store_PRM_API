@@ -31,7 +31,14 @@ namespace ConvenientStoreAPI.Controllers
           {
               return NotFound();
           }
-            return await _context.Orders.Include(x => x.Orderdetails).ThenInclude(detail => detail.Product).ThenInclude(p => p.Supplier).ToListAsync();
+            return await _context.Orders.Include(x => x.User)
+                .Include(x => x.Orderdetails)
+                .ThenInclude(detail => detail.Product).ThenInclude(p => p.Supplier)
+                .Include(x => x.Orderdetails)
+                .ThenInclude(detail => detail.Product.Image)
+                .Include(x => x.Orderdetails)
+                .ThenInclude(detail => detail.Product.Cat)
+                .ToListAsync();
         }
 
         // GET: api/Orders/5

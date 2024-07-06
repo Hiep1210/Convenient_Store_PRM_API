@@ -25,12 +25,17 @@ namespace ConvenientStoreMVC.Controllers
             ViewData["list"] = await orderService.getAll();
             return View();
         }
+
+        public async Task<IActionResult> Process(int id)
+        {
+            return RedirectToAction("Index");
+        }
         
 
         // GET: OrderController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
+            return View(await orderService.getById(id));
         }
 
         // GET: OrderController/Create
