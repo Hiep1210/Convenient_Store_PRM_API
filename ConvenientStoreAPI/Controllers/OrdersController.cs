@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using ConvenientStoreAPI.Models;
 using Microsoft.AspNetCore.OData.Query;
 using ConvenientStoreAPI.Common;
+using ConvenientStoreAPI.Mapper.DTO;
+using AutoMapper;
 
 namespace ConvenientStoreAPI.Controllers
 {
@@ -16,10 +18,12 @@ namespace ConvenientStoreAPI.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly ConvenientStoreContext _context;
+        private IMapper mapper;
 
-        public OrdersController(ConvenientStoreContext context)
+        public OrdersController(ConvenientStoreContext context, IMapper mapper)
         {
             _context = context;
+            this.mapper = mapper;
         }
 
         // GET: api/Orders
@@ -63,17 +67,17 @@ namespace ConvenientStoreAPI.Controllers
         // PUT: api/Orders/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrder(int id, Order order)
+        public async Task<IActionResult> PutOrder(int id, OrderRequest request)
         {
-            if (id != order.Id)
+            if (id != request.Id)
             {
                 return BadRequest();
             }
-
-            _context.Entry(order).State = EntityState.Modified;
+            Order order = mapper.Map<Order>(request);
 
             try
             {
+                _context.Orders.Update(order);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -90,20 +94,34 @@ namespace ConvenientStoreAPI.Controllers
 
             return NoContent();
         }
+        [HttpGet("Process/{id}")]
+        public async Task<IActionResult> ProcessOrder(int id)
+        {
+            Order order = _context.Orders.FirstOrDefault(x => x.Id == id);
+            if (order == null)
+            {
+                return NoContent();
+            }
+            order.IsProcess = true;
+            _context.Orders.Update(order);
+            await _context.SaveChangesAsync();
+            return Ok(order);
+        }
 
         // POST: api/Orders
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder(Order order)
+        public async Task<ActionResult<Order>> PostOrder(OrderRequest request)
         {
           if (_context.Orders == null)
           {
               return Problem("Entity set 'ConvenientStoreContext.Orders'  is null.");
           }
+            Order order = mapper.Map<Order>(request);
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOrder", new { id = order.Id }, order);
+            return order;
         }
 
         // DELETE: api/Orders/5

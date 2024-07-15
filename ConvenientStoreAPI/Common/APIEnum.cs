@@ -4,7 +4,8 @@ namespace ConvenientStoreAPI.Common
 {
     public enum APIEnum
     {
-        [Description("http://localhost:5000/api/")]
+        //[Description("http://localhost:5000/api/")]      
+        [Description("https://calofitweb.azurewebsites.net/api/")]
         BASE_URL,
         [Description("Products")]
         PRODUCT,

@@ -1,47 +1,77 @@
-﻿@model IEnumerable<ConvenientStoreAPI.Models.Order>
-
+﻿@using ConvenientStoreAPI.Models
 @{
     ViewData["Title"] = "View";
 }
+<div class="orders">
+    <div class="row">
+        <div class="col-xl-8">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="box-title">Orders </h4>
+                </div>
+                <div class="card-body--">
+                    <div class="table-stats order-table ov-h">
+                        <table class="table ">
+                            <thead>
+                                <tr>
+                                    <th class="serial">#</th>
+                                    <th class="avatar">Avatar</th>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Order Date</th>
+                                    <th>Address</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int i = 0;
+                                }
+                                @foreach (Order order in ViewData["list"] as List<Order>)
+                                {
+                                    {
+                                        i++;
+                                    }
+                                    <tr onclick="window.location.href = '@Url.Action("Details", "Order", new { id = order.Id })';">
+                                        <td class="serial">@i.</td>
+                                        <td class="avatar">
+                                            <div class="round-img">
+                                                <a href="#"><img class="rounded-circle" src="images/avatar/1.jpg" alt=""></a>
+                                            </div>
+                                        </td>
+                                        <td> @order.Id </td>
+                                        <td>  <span class="name">@order.User.Name</span> </td>
+                                        <td> <span class="product">@order.Date.ToString("dd/MM/yyyy")</span> </td>
+                                        <td><span class="name">@order.Address</span></td>
+                                        <td>
+                                            @if (order.IsProcess)
+                                            {
+                                                <span class="badge badge-complete">Complete</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-pending">Pending</span>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div> <!-- /.table-stats -->
+                </div>
+            </div> <!-- /.card -->
+        </div>  <!-- /.col-lg-8 -->
 
-<h1>View</h1>
+        <div class="col-xl-8">
+            <div class="card br-0">
+                <div class="card-body">
+                    <div class="traffic-chart">
+                        <canvas id="barChart"></canvas>
+                    </div>
+                </div>
+            </div><!-- /.card -->
+        </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+    </div>
+</div> <!-- /.col-md-4 -->

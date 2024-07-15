@@ -28,6 +28,7 @@ namespace ConvenientStoreMVC.Controllers
 
         public async Task<IActionResult> Process(int id)
         {
+            await orderService.updateOrder(id);
             return RedirectToAction("Index");
         }
         

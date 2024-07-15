@@ -10,6 +10,8 @@ namespace ConvenientStoreAPI.Mapper
         public MyMapper()
         {
             CreateMap<ProductRequest, Product>().ReverseMap();
+            CreateMap<OrderRequest, Order>().ReverseMap();
+            CreateMap<OrderDetailRequest, Orderdetail>().ReverseMap();
         }
     }
 }

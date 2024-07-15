@@ -1,4 +1,5 @@
 ﻿using ConvenientStoreAPI.Common;
+using ConvenientStoreAPI.Mapper.DTO;
 using ConvenientStoreAPI.Models;
 using Flurl;
 using Flurl.Http;
@@ -22,6 +23,11 @@ namespace ConvenientStoreMVC.CallService
         {
             List<Order> orders = await link.AppendQueryParam($"$filter=id eq {id}").GetJsonAsync<List<Order>>();
             return orders.First();
+        }
+
+        public async Task updateOrder(int id)
+        {
+            await link.AppendPathSegments("Process",id).GetJsonAsync<Order>();
         }
     }
 }

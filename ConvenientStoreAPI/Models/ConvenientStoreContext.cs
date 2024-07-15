@@ -42,6 +42,8 @@ namespace ConvenientStoreAPI.Models
             {
                 entity.ToTable("category");
 
+                entity.UseCollation("utf8mb4_general_ci");
+
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Name)
@@ -55,6 +57,8 @@ namespace ConvenientStoreAPI.Models
             {
                 entity.ToTable("image");
 
+                entity.UseCollation("utf8mb4_general_ci");
+
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Url).HasColumnName("url");
@@ -63,6 +67,8 @@ namespace ConvenientStoreAPI.Models
             modelBuilder.Entity<Order>(entity =>
             {
                 entity.ToTable("order");
+
+                entity.UseCollation("utf8mb4_general_ci");
 
                 entity.HasIndex(e => e.UserId, "FK_Order_User");
 
@@ -95,6 +101,8 @@ namespace ConvenientStoreAPI.Models
             {
                 entity.ToTable("orderdetail");
 
+                entity.UseCollation("utf8mb4_general_ci");
+
                 entity.HasIndex(e => e.OrderId, "FK_OrderDetail_Order");
 
                 entity.HasIndex(e => e.ProductId, "FK_OrderDetail_Product");
@@ -123,6 +131,8 @@ namespace ConvenientStoreAPI.Models
             modelBuilder.Entity<Product>(entity =>
             {
                 entity.ToTable("product");
+
+                entity.UseCollation("utf8mb4_general_ci");
 
                 entity.HasIndex(e => e.CatId, "FK_Product_Category");
 
@@ -168,6 +178,8 @@ namespace ConvenientStoreAPI.Models
             {
                 entity.ToTable("supplier");
 
+                entity.UseCollation("utf8mb4_general_ci");
+
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Contact)
@@ -186,6 +198,8 @@ namespace ConvenientStoreAPI.Models
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("user");
+
+                entity.UseCollation("utf8mb4_general_ci");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 

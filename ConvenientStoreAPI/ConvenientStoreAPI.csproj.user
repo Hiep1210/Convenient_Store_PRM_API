@@ -11,5 +11,6 @@
     <WebStackScaffolding_DbContextTypeFullName>ConvenientStoreAPI.Models.ConvenientStoreContext</WebStackScaffolding_DbContextTypeFullName>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
     <WebStackScaffolding_IsViewGenerationSelected>True</WebStackScaffolding_IsViewGenerationSelected>
+    <NameOfLastUsedPublishProfile>D:\Ki_8\PRM\ConvenientStoreAPI\ConvenientStoreAPI\Properties\PublishProfiles\calofitweb - Web Deploy.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>
